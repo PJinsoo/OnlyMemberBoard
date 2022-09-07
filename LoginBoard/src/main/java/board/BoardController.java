@@ -160,6 +160,25 @@ public class BoardController extends HttpServlet {
 		
 		else if(command.equals("boardDelete")) {
 			System.out.println("게시글 삭제 수행 시작");
+			
+			//게시글 수정(Update)와 같은 로직으로 UID 체크
+			int UID = Integer.parseInt(request.getParameter("UID"));
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			BoardDTO boardDto = new BoardDTO(UID, boardNo);
+			
+			boolean check = service.checkUID(boardDto);
+			
+			//UID 일치판단
+			if(check) {
+				//일치한다면 게시글 삭제 로직 실행
+				service.delete(boardNo);
+				jsResponse("게시글이 삭제되었습니다.", "board.do?command=boardList", response);
+			}
+			else {
+				//불일치한다면 돌려보내기
+				jsResponse("게시글 삭제는 게시글 작성자만 가능합니다.", "board.do?command=boardList", response);
+			}
+			
 		}
 		
 		

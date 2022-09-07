@@ -184,8 +184,23 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public boolean delete(Connection conn, int boardNo) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "Delete From memberBoard Where boardNo=?";
+		
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, boardNo);
+			
+			res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBC.close(rs);
+			JDBC.close(ps);
+		}
+
+		return (res>0) ? true : false;
 	}
 
 }

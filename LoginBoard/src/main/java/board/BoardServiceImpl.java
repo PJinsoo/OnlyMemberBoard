@@ -92,8 +92,15 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean delete(int boardNo) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = JDBC.getConnection();
+		
+		boolean res = dao.delete(conn, boardNo);
+		
+		if (res) {
+			JDBC.commit(conn);
+		}
+		JDBC.close(conn);
+		return res;
 	}
 
 }
