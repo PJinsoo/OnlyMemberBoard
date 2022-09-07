@@ -120,21 +120,20 @@ public class BoardDAOImpl implements BoardDAO {
 		return (res>0) ? true : false;
 	}
 
-	//UID 체크
+	//사용자 신뢰성 검사(UID 동일성 체크)
 	@Override
 	public boolean checkUID(Connection conn, BoardDTO boardDto) {
 		System.out.println("UID 확인 시작");
 		
 		String sql = "Select UID From memberBoard Where boardNo = ?";
 		
-		int boardUID = 0;
-		boolean res = false;
+		int boardUID = 0;    //게시글의 UID
+		boolean res = false; //결과 보고용 boolean
 		
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, boardDto.getBoardNo());
 			rs = ps.executeQuery();
-			
 			
 			while(rs.next()) {
 				boardUID = rs.getInt(1);
@@ -143,13 +142,15 @@ public class BoardDAOImpl implements BoardDAO {
 			System.out.println("게시글의 UID : "+ boardUID);
 			System.out.println("유저의 UID : "+ boardDto.getUID());
 			
+			//게시글의 UID와 요청한 사용자의 UID가 같다면?
 			if(boardUID == boardDto.getUID()) {
+				//사용자의 신뢰성 OK
 				res = true;
-				System.out.println("uid 일치");
-			}
-			else {
+				System.out.println("UID 일치");
+			} else {
+				//사용자의 신뢰성 X
 				res = false;
-				System.out.println("uid 불일치");
+				System.out.println("UID 불일치");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -160,11 +161,25 @@ public class BoardDAOImpl implements BoardDAO {
 	//글 수정
 	@Override
 	public boolean update(Connection conn, BoardDTO boardDto) {
-		String sql = "";
+		String sql = "Update memberBoard Set title=?, content=? Where boardNo=?";
 		
 		int res = 0;
 		
-		return false;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, boardDto.getTitle());
+			ps.setString(2, boardDto.getContent());
+			ps.setInt(3, boardDto.getBoardNo());
+			
+			res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBC.close(rs);
+			JDBC.close(ps);
+		}
+		
+		return (res>0) ? true : false;
 	}
 
 	@Override

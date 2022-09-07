@@ -46,8 +46,8 @@
 			</tr>
 			<tr>
 				<td colspan="4" align="right">
-					<input type="button" value="수정" onclick="location.href='board.do?command=boardUpdate&UID=${dto.UID }&boardNo=${dto.boardNo }'">
-					<input type="button" value="삭제" onclick="location.href='board.do?command=boardDelete&UID=${dto.UID }&boardNo=${dto.boardNo }'">
+					<input type="button" value="수정" onclick="location.href='board.do?command=boardUpdate&UID=${UID }&boardNo=${dto.boardNo }'">
+					<input type="button" value="삭제" onclick="location.href='board.do?command=boardDelete&UID=${UID }&boardNo=${dto.boardNo }'">
 					<input type="button" value="글 목록" onclick="location.href='board.do?command=boardList'">
 				</td>
 			</tr>

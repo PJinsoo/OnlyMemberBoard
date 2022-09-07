@@ -27,11 +27,13 @@ public class BoardDTO {
 		this.postTime = postTime;
 	}
 	
+	//게시글 조회용 생성자
 	public BoardDTO(int boardNo) {
 		super();
 		this.boardNo = boardNo;
 	}
 
+	//게시글 작성용 생성자
 	public BoardDTO(int UID, String memberNickname, String title, String content) {
 		super();
 		this.UID = UID;
@@ -41,14 +43,14 @@ public class BoardDTO {
 	}
 
 	//게시글 수정용 생성자
-	public BoardDTO(int UID, int boardNo, String title, String content) {
+	public BoardDTO(int boardNo, String title, String content) {
 		super();
-		this.UID = UID;
 		this.boardNo = boardNo;
 		this.title = title;
 		this.content = content;
 	}
 
+	//사용자 신뢰성 검사용 생성자, UID의 경우 사용자의 UID가 들어오게 됨
 	public BoardDTO(int UID, int boardNo) {
 		super();
 		this.UID = UID;

@@ -97,49 +97,60 @@ public class BoardController extends HttpServlet {
 			}
 		}
 		
+		/* 게시글 수정, 삭제의 경우
+		 * 해당 게시글을 작성한 사용자만 가능한 기능으로 구현해야함.
+		 * 누구나 게시글을 수정, 삭제할 수 있다면 의미가 없음.
+		 * 
+		 * BoardService 객체의 Check() 메소드에서 사용자의 신뢰성 검사.
+		 */
+		
 		//게시글 수정 페이지 로딩
 		else if(command.equals("boardUpdate")) {
-			System.out.println("게시글 수정 페이지 로드");
+			System.out.println("사용자의 게시글 수정 요청");
 			
+			//사용자 신뢰성 검사를 위한 UID
 			int UID = Integer.parseInt(request.getParameter("UID"));
+			
+			//수정을 요청한 게시글의 BoardNO
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			
+			//사용자와 게시글의 UID의 동일성을 체크하기 위한 객체 
 			BoardDTO boardDto = new BoardDTO(UID, boardNo);
 			
+			//사용자의 신뢰성 검사
 			boolean check = service.checkUID(boardDto);
 			
+			//사용자의 신뢰성이 참이라면
 			if(check) {
 				//수정을 요구한 게시글의 정보를 그대로 저장
 				BoardDTO dto = service.selectOne(boardNo);
 				
-				//boardUpdate.jsp로 이동하면서 dto에 저장된 정보를 그대로 출력
+				//boardUpdate.jsp로 이동하면서 dto객체에 저장된 정보를 그대로 출력
 				request.setAttribute("dto", dto);
 				dispatch("board_view/boardUpdate.jsp", request, response);
 			}
-			else {
+			else { //사용자의 신뢰성이 유효하지않음
 				jsResponse("게시글의 작성자가 아닙니다!", "board.do?command=boardList", response);
 			}
 		}
 		
 		//게시글 수정 실행
 		else if(command.equals("updateExecute")) {
-			System.out.println("updateExecute");
+			System.out.println("게시글 수정 실행");
 			
-			//원글 작성자와 수정자의 UID가 일치해야 수정이 가능
-			int UID = Integer.parseInt(request.getParameter("UID"));
-			
-			//원글의 게시판 번호
+			//수정에 필요한 정보
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-			
 			String title = request.getParameter("boardTitle");
 			String content = request.getParameter("boardContent");
 			
-			BoardDTO boardDto = new BoardDTO(UID, boardNo, title, content);
+			//수정용 객체
+			BoardDTO boardDto = new BoardDTO(boardNo, title, content);
 			
+			//Service에 전달(DB 실행)
 			boolean res = service.update(boardDto);
 			
 			if(res) {
-				jsResponse("게시글이 수정되었습니다.", "board.do?command=boardList", response);
+				jsResponse("게시글이 수정되었습니다.", "board.do?command=boardOne&boardNo="+boardNo, response);
 				System.out.println("게시글 수정 완료");
 			} else {
 				dispatch("board.do?command=boardUpdate&boardNo="+boardNo, request, response);

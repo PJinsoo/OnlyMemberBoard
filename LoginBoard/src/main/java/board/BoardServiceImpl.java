@@ -66,7 +66,7 @@ public class BoardServiceImpl implements BoardService {
 		return res;
 	}
 
-	//UID 체크
+	//사용자 신뢰성 검사(UID 일치 체크)
 	@Override
 	public boolean checkUID(BoardDTO boardDto) {
 		Connection conn = JDBC.getConnection();
@@ -75,7 +75,6 @@ public class BoardServiceImpl implements BoardService {
 		JDBC.close(conn);
 		return res;
 	}
-	
 	
 	//게시글 수정
 	@Override
