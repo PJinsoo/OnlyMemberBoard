@@ -40,6 +40,21 @@ public class BoardDTO {
 		this.content = content;
 	}
 
+	//게시글 수정용 생성자
+	public BoardDTO(int UID, int boardNo, String title, String content) {
+		super();
+		this.UID = UID;
+		this.boardNo = boardNo;
+		this.title = title;
+		this.content = content;
+	}
+
+	public BoardDTO(int UID, int boardNo) {
+		super();
+		this.UID = UID;
+		this.boardNo = boardNo;
+	}
+
 	public int getBoardNo() {
 		return boardNo;
 	}

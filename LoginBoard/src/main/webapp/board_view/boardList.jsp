@@ -48,8 +48,8 @@
 				<td><div align="center">${DTO.memberNickname }</div></td>
 				<td><div align="center">${DTO.viewCount }</div></td>
 				<td>${DTO.postTime }</td>
-				<td><div align="center"><a href="board.do?command=boardUpdate&boardNo=${DTO.boardNo }">수정</a></div></td>
-				<td><div align="center"><a href="board.do?command=boardDelete&boardNo=${DTO.boardNo }">삭제</a></div></td>
+				<td><div align="center"><a href="board.do?command=boardUpdate&UID=${UID }&boardNo=${DTO.boardNo }">수정</a></div></td>
+				<td><div align="center"><a href="board.do?command=boardDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></div></td>
 			</tr>
 		</c:forEach>
 		<tr>

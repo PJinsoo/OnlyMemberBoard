@@ -15,6 +15,9 @@ public interface BoardService {
 	//게시글 작성
 	public boolean insert(BoardDTO dto);
 	
+	//UID 체크
+	public boolean checkUID(BoardDTO dto);
+	
 	//게시글 수정
 	public boolean update(BoardDTO dto);
 	

@@ -66,10 +66,29 @@ public class BoardServiceImpl implements BoardService {
 		return res;
 	}
 
+	//UID 체크
+	@Override
+	public boolean checkUID(BoardDTO boardDto) {
+		Connection conn = JDBC.getConnection();
+		boolean res = dao.checkUID(conn, boardDto);
+		
+		JDBC.close(conn);
+		return res;
+	}
+	
+	
+	//게시글 수정
 	@Override
 	public boolean update(BoardDTO boardDto) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = JDBC.getConnection();
+		
+		boolean res = dao.update(conn, boardDto);
+		
+		if (res) {
+			JDBC.commit(conn);
+		}
+		JDBC.close(conn);
+		return res;
 	}
 
 	@Override

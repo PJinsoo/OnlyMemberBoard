@@ -97,9 +97,54 @@ public class BoardController extends HttpServlet {
 			}
 		}
 		
-		//게시글 수정
+		//게시글 수정 페이지 로딩
 		else if(command.equals("boardUpdate")) {
-			System.out.println("게시글 수정 수행 시작");
+			System.out.println("게시글 수정 페이지 로드");
+			
+			int UID = Integer.parseInt(request.getParameter("UID"));
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			
+			BoardDTO boardDto = new BoardDTO(UID, boardNo);
+			
+			boolean check = service.checkUID(boardDto);
+			
+			if(check) {
+				//수정을 요구한 게시글의 정보를 그대로 저장
+				BoardDTO dto = service.selectOne(boardNo);
+				
+				//boardUpdate.jsp로 이동하면서 dto에 저장된 정보를 그대로 출력
+				request.setAttribute("dto", dto);
+				dispatch("board_view/boardUpdate.jsp", request, response);
+			}
+			else {
+				jsResponse("게시글의 작성자가 아닙니다!", "board.do?command=boardList", response);
+			}
+		}
+		
+		//게시글 수정 실행
+		else if(command.equals("updateExecute")) {
+			System.out.println("updateExecute");
+			
+			//원글 작성자와 수정자의 UID가 일치해야 수정이 가능
+			int UID = Integer.parseInt(request.getParameter("UID"));
+			
+			//원글의 게시판 번호
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			
+			String title = request.getParameter("boardTitle");
+			String content = request.getParameter("boardContent");
+			
+			BoardDTO boardDto = new BoardDTO(UID, boardNo, title, content);
+			
+			boolean res = service.update(boardDto);
+			
+			if(res) {
+				jsResponse("게시글이 수정되었습니다.", "board.do?command=boardList", response);
+				System.out.println("게시글 수정 완료");
+			} else {
+				dispatch("board.do?command=boardUpdate&boardNo="+boardNo, request, response);
+				System.out.println("게시글 수정 실패");
+			}
 		}
 		
 		else if(command.equals("boardDelete")) {

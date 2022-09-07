@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db_connection.JDBC;
+import member.MemberDTO;
 
 public class BoardDAOImpl implements BoardDAO {
 
@@ -119,9 +120,50 @@ public class BoardDAOImpl implements BoardDAO {
 		return (res>0) ? true : false;
 	}
 
+	//UID 체크
 	@Override
-	public boolean update(Connection conn, BoardDTO dto) {
-		// TODO Auto-generated method stub
+	public boolean checkUID(Connection conn, BoardDTO boardDto) {
+		System.out.println("UID 확인 시작");
+		
+		String sql = "Select UID From memberBoard Where boardNo = ?";
+		
+		int boardUID = 0;
+		boolean res = false;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, boardDto.getBoardNo());
+			rs = ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				boardUID = rs.getInt(1);
+			}
+			
+			System.out.println("게시글의 UID : "+ boardUID);
+			System.out.println("유저의 UID : "+ boardDto.getUID());
+			
+			if(boardUID == boardDto.getUID()) {
+				res = true;
+				System.out.println("uid 일치");
+			}
+			else {
+				res = false;
+				System.out.println("uid 불일치");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	//글 수정
+	@Override
+	public boolean update(Connection conn, BoardDTO boardDto) {
+		String sql = "";
+		
+		int res = 0;
+		
 		return false;
 	}
 

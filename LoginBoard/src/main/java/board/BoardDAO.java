@@ -23,6 +23,9 @@ public interface BoardDAO {
 	//게시글 작성
 	public boolean insert(Connection conn, BoardDTO dto);
 	
+	//UID 체크
+	public boolean checkUID(Connection conn, BoardDTO dto);
+	
 	//게시글 수정
 	public boolean update(Connection conn, BoardDTO dto);
 	

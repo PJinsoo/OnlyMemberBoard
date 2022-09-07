@@ -34,6 +34,11 @@ public class MemberDTO {
 		this.memberID = memberID;
 		this.memberPW = memberPW;
 	}
+	
+	public MemberDTO(int UID) {
+		super();
+		this.UID = UID;
+	}
 
 	public int getUID() {
 		return UID;
