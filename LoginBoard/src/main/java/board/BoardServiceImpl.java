@@ -22,6 +22,16 @@ public class BoardServiceImpl implements BoardService {
 
 		return res;
 	}
+	
+	//게시글 검색
+	@Override
+	public List<BoardDTO> search(String searchOption, String searchWord){
+
+		Connection conn = JDBC.getConnection();
+		List<BoardDTO> res = dao.search(conn, searchOption, searchWord);
+		
+		return res;
+	}
 
 	// 게시글 하나 보기
 	@Override

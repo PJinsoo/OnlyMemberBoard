@@ -14,6 +14,9 @@ public interface BoardDAO {
 	//게시글 목록 출력
 	public List<BoardDTO> selectList(Connection conn);
 	
+	//게시판 검색
+	public List<BoardDTO> search(Connection conn, String searchOption, String searchWord);
+	
 	//게시글 하나 출력
 	public BoardDTO selectOne(Connection conn, int boardNo);
 	

@@ -39,6 +39,83 @@ public class BoardDAOImpl implements BoardDAO {
 		return res;
 	}
 
+	//게시글 검색
+	@Override
+	public List<BoardDTO> search(Connection conn, String searchOption, String searchWord){
+		
+		String sql = null;
+		List<BoardDTO> res = new ArrayList<BoardDTO>();
+		
+		System.out.println("검색 옵션 : " + searchOption);
+		System.out.println("검색 단어 : " + searchWord);
+		
+		//searchOption의 값에 따라 쿼리가 달라져야 함.
+		
+		//제목으로 게시글 검색
+		if(searchOption.equals("searchTitle")) {
+			sql = "Select * From memberBoard Where title like ?";
+			
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "%"+searchWord+"%"); //검색된 단어 쿼리에 삽입
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+							rs.getString(5), rs.getInt(6), rs.getDate(7));
+					res.add(tmp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//작성자로 게시글 검색
+		else if(searchOption.equals("searchWriter")) {
+			sql = "Select * From memberBoard Where memberNickname like ?";
+			
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "%"+searchWord+"%"); //검색된 단어 쿼리에 삽입
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+							rs.getString(5), rs.getInt(6), rs.getDate(7));
+					res.add(tmp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//제목과(OR) 작성자로 게시글 검색
+		else if(searchOption.equals("searchAll")) {
+			sql = "Select * From memberBoard Where title like ? Or memberNickname like ?";
+			
+			try {
+				ps = conn.prepareStatement(sql);
+				
+				//검색된 단어 쿼리에 삽입
+				ps.setString(1, "%"+searchWord+"%");
+				ps.setString(2, "%"+searchWord+"%");
+				
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+							rs.getString(5), rs.getInt(6), rs.getDate(7));
+					res.add(tmp);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return res;
+	}
+	
+	
 	// 게시글 하나 조회
 	@Override
 	public BoardDTO selectOne(Connection conn, int boardNo) {

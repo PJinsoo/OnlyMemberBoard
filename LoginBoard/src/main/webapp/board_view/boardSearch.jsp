@@ -20,10 +20,10 @@
 		<!-- 로그인 상태 -->
 		<%
 		} else if ((boolean) session.getAttribute("login")) {
-			System.out.println("인증된 유저의 게시판 접근");
+			System.out.println("게시글 검색");
 		%>
 		
-		<h1>게시판 목록</h1> <hr>
+		<h1>${searchWord }의 검색 결과</h1> <hr>
 		<table border="1">
 			<col width="50px"> 	<!-- 글 번호 -->
 			<col width="200px"> <!-- 제목 -->
@@ -57,30 +57,32 @@
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
-		<c:forEach var="DTO" items="${list }">
+		<c:forEach var="search" items="${searchList }">
 			<tr>
-				<td><div align="center">${DTO.boardNo }</div></td>
-				<td><a href="board.do?command=boardOne&boardNo=${DTO.boardNo }">${DTO.title }</a></td>
-				<td><div align="center">${DTO.memberNickname }</div></td>
-				<td><div align="center">${DTO.viewCount }</div></td>
-				<td>${DTO.postTime }</td>
-				<td><div align="center"><a href="board.do?command=boardUpdate&UID=${UID }&boardNo=${DTO.boardNo }">수정</a></div></td>
-				<td><div align="center"><a href="board.do?command=boardDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></div></td>
+				<td><div align="center">${search.boardNo }</div></td>
+				<td><a href="board.do?command=boardOne&boardNo=${search.boardNo }">${search.title }</a></td>
+				<td><div align="center">${search.memberNickname }</div></td>
+				<td><div align="center">${search.viewCount }</div></td>
+				<td>${search.postTime }</td>
+				<td><div align="center"><a href="board.do?command=boardUpdate&UID=${UID }&boardNo=${search.boardNo }">수정</a></div></td>
+				<td><div align="center"><a href="board.do?command=boardDelete&UID=${UID }&boardNo=${search.boardNo }">삭제</a></div></td>
 			</tr>
 		</c:forEach>
 		<tr>
 			<td colspan="7">			
 				<div align="right">
+					<input type="button" value="게시판으로 돌아가기" onclick="location.href='board.do?command=boardList'">
 					<input type="button" value="새 글 쓰기" onclick="location.href='board.do?command=boardInsert'">
 				</div>
 			</td>
 		</tr>
 	</table>
 	
-	<button onclick='location.href="member.do?command=index"'>내 페이지</button><br>
+	<button onclick='location.href="member.do?command=index"'>내 페이지</button>
+	<br>
 		
 		<%
-		System.out.println("게시판 로딩 완료");
+		System.out.println("검색 완료 페이지 로드");
 		}
 		%>
 

@@ -6,7 +6,10 @@ public interface BoardService {
 	//게시글 목록 출력
 	public List<BoardDTO> selectList();
 	
-	//게시글 하나 출력
+	//게시글 검색
+	public List<BoardDTO> search(String searchOption, String searchWord);
+	
+	//게시글 조회
 	public BoardDTO selectOne(int boardNo);
 	
 	//조회수 카운팅

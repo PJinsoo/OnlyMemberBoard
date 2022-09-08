@@ -153,6 +153,7 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 	
 	//회원 탈퇴
+	@Override
 	public boolean withdraw(Connection conn, int UID) {
 		String sql = "Delete From members Where UID = ?";
 		

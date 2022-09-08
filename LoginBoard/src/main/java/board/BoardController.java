@@ -45,8 +45,21 @@ public class BoardController extends HttpServlet {
 			List<BoardDTO> list = service.selectList();
 			
 			request.setAttribute("list", list);
-			
 			dispatch("board_view/boardList.jsp", request, response);
+		}
+		
+		//게시글 검색
+		else if(command.equals("search")) {
+			System.out.println("사용자 게시글 검색 요청");
+			
+			String searchOption = request.getParameter("searchOption");
+			String searchWord = request.getParameter("searchWord");
+			
+			List<BoardDTO> searchList = service.search(searchOption, searchWord);
+			
+			request.setAttribute("searchList", searchList);
+			request.setAttribute("searchWord", searchWord);
+			dispatch("board_view/boardSearch.jsp", request, response);
 		}
 		
 		//사용자 게시글 제목 클릭, 게시글 조회 요청
@@ -178,7 +191,6 @@ public class BoardController extends HttpServlet {
 				//불일치한다면 돌려보내기
 				jsResponse("게시글 삭제는 게시글 작성자만 가능합니다.", "board.do?command=boardList", response);
 			}
-			
 		}
 		
 	} //doGet()의 끝
