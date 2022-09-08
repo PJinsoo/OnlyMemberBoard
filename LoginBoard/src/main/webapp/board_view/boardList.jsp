@@ -25,20 +25,23 @@
 		
 		<h1>게시판 목록</h1> <hr>
 		<table border="1">
-			<col width="50px"> 	<!-- 글 번호 -->
-			<col width="200px"> <!-- 제목 -->
-			<col width="100px">	<!-- 작성자 -->
-			<col width="70px"> 	<!-- 조회수 -->
-			<col width="100px"> <!-- 작성일자 -->
-			<col width="50px"> 	<!-- 수정 -->
-			<col width="50px"> 	<!-- 삭제 -->
+			<col width="50px">	
+			<col width="200px">
+			<col width="100px">
+			<col width="70px">
+			<col width="100px">
+			<col width="50px">
+			<col width="50px">
+			
+			<!-- 검색 -->
 			<tr>
-				<td colspan="7">	
+				<td colspan="7">
 					<div align="right">
 						<form action="board.do" method="post">
 							<input type="hidden" name="command" value="search">
 							<select name = "searchOption">
 								<option value="searchTitle">제목</option>
+								<option value="searchContent">내용</option>
 								<option value="searchWriter">작성자</option>
 								<option value="searchAll">전체</option>
 							</select>
@@ -48,6 +51,7 @@
 					</div>
 				</td>
 			</tr>
+			
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
@@ -57,6 +61,8 @@
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
+			
+			<!-- 게시글 정보 로드 -->
 		<c:forEach var="DTO" items="${list }">
 			<tr>
 				<td><div align="center">${DTO.boardNo }</div></td>
@@ -68,6 +74,7 @@
 				<td><div align="center"><a href="board.do?command=boardDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></div></td>
 			</tr>
 		</c:forEach>
+		
 		<tr>
 			<td colspan="7">			
 				<div align="right">

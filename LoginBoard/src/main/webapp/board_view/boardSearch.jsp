@@ -39,6 +39,7 @@
 							<input type="hidden" name="command" value="search">
 							<select name = "searchOption">
 								<option value="searchTitle">제목</option>
+								<option value="searchContent">내용</option>
 								<option value="searchWriter">작성자</option>
 								<option value="searchAll">전체</option>
 							</select>
