@@ -13,7 +13,7 @@ import member.MemberDTO;
 public class BoardDAOImpl implements BoardDAO {
 
 	private PreparedStatement ps = null; // SQL 수행 객체
-	private ResultSet rs = null; // SQL조회 결과 객체
+	private ResultSet rs = null; // SQL조회(Select) 결과 저장 객체
 
 	// 게시글 전체 목록 출력
 	@Override
@@ -120,7 +120,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return (res>0) ? true : false;
 	}
 
-	//사용자 신뢰성 검사(UID 동일성 체크)
+	//사용자 UID 검사
 	@Override
 	public boolean checkUID(Connection conn, BoardDTO boardDto) {
 		System.out.println("UID 확인 시작");
@@ -142,13 +142,13 @@ public class BoardDAOImpl implements BoardDAO {
 			System.out.println("게시글의 UID : "+ boardUID);
 			System.out.println("유저의 UID : "+ boardDto.getUID());
 			
-			//게시글의 UID와 요청한 사용자의 UID가 같다면?
+			//게시글의 UID와 요청한 사용자의 UID가 같다면
 			if(boardUID == boardDto.getUID()) {
-				//사용자의 신뢰성 OK
+				//OK, true 반환
 				res = true;
 				System.out.println("UID 일치");
 			} else {
-				//사용자의 신뢰성 X
+				//No, false 반환
 				res = false;
 				System.out.println("UID 불일치");
 			}
@@ -182,6 +182,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return (res>0) ? true : false;
 	}
 
+	//글 삭제
 	@Override
 	public boolean delete(Connection conn, int boardNo) {
 		String sql = "Delete From memberBoard Where boardNo=?";

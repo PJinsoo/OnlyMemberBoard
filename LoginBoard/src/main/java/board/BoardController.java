@@ -101,26 +101,26 @@ public class BoardController extends HttpServlet {
 		 * 해당 게시글을 작성한 사용자만 가능한 기능으로 구현해야함.
 		 * 누구나 게시글을 수정, 삭제할 수 있다면 의미가 없음.
 		 * 
-		 * BoardService 객체의 Check() 메소드에서 사용자의 신뢰성 검사.
+		 * BoardService 객체의 Check() 메소드에서 UID 검사.
 		 */
 		
 		//게시글 수정 페이지 로딩
 		else if(command.equals("boardUpdate")) {
 			System.out.println("사용자의 게시글 수정 요청");
 			
-			//사용자 신뢰성 검사를 위한 UID
+			//사용자의 UID
 			int UID = Integer.parseInt(request.getParameter("UID"));
 			
-			//수정을 요청한 게시글의 BoardNO
+			//게시판의 UID
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			
 			//사용자와 게시글의 UID의 동일성을 체크하기 위한 객체 
 			BoardDTO boardDto = new BoardDTO(UID, boardNo);
 			
-			//사용자의 신뢰성 검사
+			//UID 검사
 			boolean check = service.checkUID(boardDto);
 			
-			//사용자의 신뢰성이 참이라면
+			//UID가 일치한다면
 			if(check) {
 				//수정을 요구한 게시글의 정보를 그대로 저장
 				BoardDTO dto = service.selectOne(boardNo);
@@ -129,7 +129,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("dto", dto);
 				dispatch("board_view/boardUpdate.jsp", request, response);
 			}
-			else { //사용자의 신뢰성이 유효하지않음
+			else { //UID가 일치하지 않는다면 수정 요청을 거부
 				jsResponse("게시글의 작성자가 아닙니다!", "board.do?command=boardList", response);
 			}
 		}
@@ -181,9 +181,6 @@ public class BoardController extends HttpServlet {
 			
 		}
 		
-		
-		
-		
 	} //doGet()의 끝
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -209,4 +206,4 @@ public class BoardController extends HttpServlet {
 		out.print(alert);
 	}
 	
-} //컨트롤러의 끝
+} //게시판 컨트롤러의 끝

@@ -46,7 +46,7 @@ public class MemberController extends HttpServlet {
 		else if (command.equals("register")) {
 			System.out.println("회원가입 화면 출력");
 
-			response.sendRedirect("register.jsp");
+			response.sendRedirect("member_view/register.jsp");
 		}
 
 		// 가입하기 버튼을 클릭한 회원 등록하기
@@ -61,16 +61,16 @@ public class MemberController extends HttpServlet {
 			boolean res = memberService.register(member);
 
 			if (res) { // 가입에 성공했다면 성공 alert 창을 띄워줌
-				jsResponse("가입을 축하드립니다!", "controller.do?command=index", response);
+				jsResponse("가입을 축하드립니다!", "member.do?command=index", response);
 			} else { // 작성에 실패했다면 다시 가입 페이지로 돌려보냄
-				jsResponse("가입에 실패하셨습니다. 다시 시도해주세요.", "controller.do?command=index", response);
+				jsResponse("가입에 실패하셨습니다. 다시 시도해주세요.", "member.do?command=index", response);
 			}
 		}
 
 		// 로그인 화면 출력
 		else if (command.equals("login")) {
 			System.out.println("로그인 화면 출력");
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("member_view/login.jsp");
 		}
 
 		// 로그인 체크
@@ -88,7 +88,7 @@ public class MemberController extends HttpServlet {
 
 				member = memberService.info(member);
 
-				// 세션정보 저장하기
+				//로그인한 사용자의 세션 저장하기
 				HttpSession session = request.getSession();
 				session.setAttribute("login", login);
 				session.setAttribute("UID", member.getUID());
@@ -97,9 +97,9 @@ public class MemberController extends HttpServlet {
 				session.setAttribute("memberNickname", member.getMemberNickname());
 
 				System.out.println(memberID + " 유저의 정보 확인 완료");
-				jsResponse(memberID + "님 환영합니다!", "controller.do?command=index", response);
+				jsResponse(memberID + "님 환영합니다!", "member.do?command=index", response);
 			} else {
-				jsResponse("유저 정보가 틀립니다.", "controller.do?command=index", response);
+				jsResponse("유저 정보가 틀립니다.", "member.do?command=index", response);
 			}
 		}
 
@@ -115,7 +115,7 @@ public class MemberController extends HttpServlet {
 		//회원 정보 수정 페이지 출력
 		else if(command.equals("memberUpdatePage")) {
 			System.out.println("회원 정보 수정 화면 출력");
-			response.sendRedirect("memberUpdatePage.jsp");
+			response.sendRedirect("member_view/memberUpdatePage.jsp");
 		}
 		
 		
@@ -133,10 +133,43 @@ public class MemberController extends HttpServlet {
 			boolean res = memberService.memberUpdate(member);
 			
 			if(res) {
-				jsResponse("회원 정보가 수정되었습니다.", "controller.do?command=index", response);
+				jsResponse("회원 정보가 수정되었습니다.", "member.do?command=index", response);
 			}
 		}
-	}
+		
+		//회원 탈퇴 페이지 로드
+		else if(command.equals("withdraw")) {
+			System.out.println("회원 탈퇴 페이지 로드");
+			response.sendRedirect("member_view/withdraw.jsp");
+		}
+		
+		//회원 탈퇴 실행
+		else if(command.equals("leave")) {
+			int UID = Integer.parseInt(request.getParameter("UID"));
+			String memberPW = request.getParameter("memberPW");
+			
+			MemberDTO member = new MemberDTO(UID, memberPW);
+			
+			//비밀번호 확인
+			boolean check = memberService.checkPW(member);
+			
+			if(check) {
+				//비밀번호 확인 완료, 탈퇴 승인
+				
+				//로그아웃(사용자 세션 해제)
+				request.getSession().invalidate();
+				
+				//회원탈퇴 실행
+				memberService.withdraw(member.getUID());
+				jsResponse("탈퇴되셨습니다.", "member.do?command=index", response);
+			}
+			else {
+				//비밀번호가 틀림, 탈퇴 거부
+				jsResponse("비밀번호가 다릅니다!", "member.do?command=withdraw", response);
+			}
+		}
+		
+	} //doGet()의 끝
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

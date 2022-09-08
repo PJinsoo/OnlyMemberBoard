@@ -9,7 +9,7 @@
 <body>
 	<h1>회원가입</h1>
 	<hr>
-	<form action="controller.do" method="post">
+	<form action="../member.do" method="post">
 		<input type="hidden" name="command" value="regiComplete">
 		<label for="memberID">아이디</label>
 		<input type="text" id="memberID" name="memberID" /><br>
@@ -19,7 +19,7 @@
 		<input type="text" id="memberNickname" name="memberNickname" /><br>
 		
 		<input type="submit" value="가입하기">
-		<input type="button" value="돌아가기" onclick="location.href='controller.do?command=index'">
+		<input type="button" value="돌아가기" onclick='location.href="../member.do?command=index"'>
 	</form>
 </body>
 </html>

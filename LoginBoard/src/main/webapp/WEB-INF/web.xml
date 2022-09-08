@@ -17,7 +17,7 @@
   
   <servlet-mapping>
   	<servlet-name>Member</servlet-name>
-  	<url-pattern>/controller.do</url-pattern>
+  	<url-pattern>/member.do</url-pattern>
   </servlet-mapping>
   
   <servlet>

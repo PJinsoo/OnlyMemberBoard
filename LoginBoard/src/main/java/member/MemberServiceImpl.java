@@ -56,8 +56,31 @@ public class MemberServiceImpl implements MemberService {
 		
 		return res;
 	}
-	
-	
-	
-	
+
+	//사용자 비밀번호 확인
+	@Override
+	public boolean checkPW(MemberDTO member) {
+		Connection conn = JDBC.getConnection();
+		
+		boolean res = memberDao.checkPW(conn, member);
+		
+		JDBC.close(conn);
+		
+		return res;
+	}
+
+	//회원 탈퇴
+	@Override
+	public boolean withdraw(int UID) {
+		Connection conn = JDBC.getConnection();
+		
+		boolean res = memberDao.withdraw(conn, UID);
+		
+		if(res) { //회원 정보 수정 성공
+			JDBC.commit(conn);
+		}
+		JDBC.close(conn);
+		
+		return res;
+	}
 }

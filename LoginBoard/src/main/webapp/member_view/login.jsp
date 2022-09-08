@@ -9,7 +9,7 @@
 <body>
 	<h1>로그인</h1>
 	<hr>
-	<form action="controller.do" method="post">
+	<form action="../member.do" method="post">
 		<!-- 컨트롤러 Command 확인용 input -->
 		<input type="hidden" name="command" value="loginCheck">
 		
@@ -19,7 +19,7 @@
 		<input type="text" id="memberPW" name="memberPW" /><br>
 		
 		<input type="submit" value="로그인">
-		<input type="button" value="취소" onclick="location.href='controller.do?command=index'">
+		<input type="button" value="취소" onclick="location.href='../member.do?command=index'">
 	</form>
 </body>
 </html>

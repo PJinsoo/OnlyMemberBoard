@@ -14,7 +14,7 @@
 			System.out.println("인증되지 않은 유저의 접근");
 		%>
 		<strong>잘못된 접근입니다.</strong><br>
-		<button onclick='location.href="controller.do?command=index"'>돌아가기</button><br>
+		<button onclick='location.href="member.do?command=index"'>돌아가기</button><br>
 
 		<!-- 로그인 상태 -->
 		<%
@@ -42,7 +42,7 @@
 			</tr>
 			<tr>	
 				<th>내용</th>
-				<td colspan="3"><textarea rows="10" cols="60">${dto.content }</textarea></td>
+				<td colspan="3"><textarea rows="10" cols="60" readonly>${dto.content }</textarea></td>
 			</tr>
 			<tr>
 				<td colspan="4" align="right">

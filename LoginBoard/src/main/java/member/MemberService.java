@@ -13,4 +13,10 @@ public interface MemberService {
 	
 	//회원 정보 수정(member Update)
 	public boolean memberUpdate(MemberDTO member);
+	
+	//사용자 비밀번호 확인
+	public boolean checkPW(MemberDTO member);
+	
+	//회원 탈퇴(member Delete)
+	public boolean withdraw(int UID);
 }

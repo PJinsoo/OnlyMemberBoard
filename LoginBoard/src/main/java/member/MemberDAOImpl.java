@@ -116,5 +116,62 @@ public class MemberDAOImpl implements MemberDAO{
 		}
 		return (res>0) ? true : false;
 	}
+
+	//회원의 비밀번호 검증
+	@Override
+	public boolean checkPW(Connection conn, MemberDTO member) {
+		System.out.println("비밀번호 검증 시작");
+		System.out.println("탈퇴 요청 UID : " + member.getUID());
+		
+		String sql = "Select memberPW From members Where UID = ?";
+		String PW = null;
+		boolean res = false;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,member.getUID());
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				PW = rs.getString(1);
+			}
+			
+			System.out.println("입력된 PW : " + PW);
+			System.out.println("실제 PW : " + member.getMemberPW());
+			
+			if(PW.equals(member.getMemberPW())) {
+				res = true;
+			} else {
+				res = false;
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("리턴 : " + res);
+		return res;
+	}
+	
+	//회원 탈퇴
+	public boolean withdraw(Connection conn, int UID) {
+		String sql = "Delete From members Where UID = ?";
+		
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, UID);
+			
+			res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBC.close(rs);
+			JDBC.close(ps);
+		}
+		
+		return (res>0) ? true : false;
+	}
+	
 	
 }

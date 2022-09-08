@@ -39,6 +39,13 @@ public class MemberDTO {
 		super();
 		this.UID = UID;
 	}
+	
+	//비밀번호 검증용 생성자
+	public MemberDTO(int UID, String memberPW) {
+		super();
+		this.UID = UID;
+		this.memberPW = memberPW;
+	}
 
 	public int getUID() {
 		return UID;
