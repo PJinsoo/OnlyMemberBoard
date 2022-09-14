@@ -30,4 +30,14 @@
   	<url-pattern>/board.do</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+  	<servlet-name>Comment</servlet-name>
+  	<servlet-class>comment.CommetController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Comment</servlet-name>
+  	<url-pattern>/comment.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

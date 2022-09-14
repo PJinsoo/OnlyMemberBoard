@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,9 +68,7 @@
 			</tr>
 			<tr>
 				<!-- 추천 버튼, 클릭 시 recommend()에서 Ajax 수행 -->
-				<td colspan="4" align="center">
-				<input type="button" value="추천" onclick="recommend()" /> ${dto.recommend }
-				</td>
+				<td colspan="4" align="center"><input type="button" value="추천" onclick="recommend()" /> ${dto.recommend }</td>
 			</tr>
 			<tr>
 				<td colspan="4" align="right"><input type="button" value="수정"
@@ -78,6 +77,49 @@
 					onclick="location.href='board.do?command=boardDelete&UID=${UID }&boardNo=${dto.boardNo }'">
 					<input type="button" value="글 목록"
 					onclick="location.href='board.do?command=boardList'"></td>
+			</tr>
+		</table>
+	</div>
+	
+	<hr>
+
+	<div>
+		<!-- 댓글 테이블 -->
+		<table>
+			<col width="70px">
+			<col width="200px">
+			<col width="100px">
+			<col width="70px">
+			<col width="70px">
+			
+			<tr bgcolor=#F4EFE4>
+				<th colspan="5" align="center">댓글창</th>
+			</tr>
+			
+			<tr bgcolor=#F4EFE4>
+				<th align="center">작성자</th>
+				<th align="center">댓글</th>
+				<th align="center">작성일</th>
+				<th align="center">수정</th>
+				<th align="center">삭제</th>
+			</tr>
+			
+			<!-- 댓글 칸 -->
+			<c:forEach var="commentDTO" items="${commentList }">
+				<tr bgcolor=#F4EFE4>
+					<td align="center">${commentDTO.memberNickname }</td>
+					<td>${commentDTO.commentContent }</td>
+					<td align="center">${commentDTO.commentTime }</td>
+					<td align="center"><a href="comment.do?command=commentUpdate&UID=${UID }&boardNo=${DTO.boardNo }">수정</a></td>
+					<td align="center"><a href="comment.do?command=commentDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></td>
+				</tr>
+			</c:forEach>
+			
+			<!-- 댓글 작성칸 -->
+			<tr bgcolor=#F4EFE4>
+				<td>${memberNickname }</td>
+				<td colspan="3"><textarea rows="1" cols="50" name="commentContent"></textarea></td>
+				<td><input type="button" value="댓글 쓰기" onclick="comment()" /></td>
 			</tr>
 		</table>
 

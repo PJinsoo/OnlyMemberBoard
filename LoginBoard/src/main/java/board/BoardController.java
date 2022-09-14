@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import comment.CommentDTO;
+import comment.CommentService;
+import comment.CommentServiceImpl;
+
 
 //게시판 관리 컨트롤러
 
@@ -77,7 +81,14 @@ public class BoardController extends HttpServlet {
 			service.countingView(counting);
 			System.out.println("게시글 번호" + boardNo + " 조회수 증가");
 			
+			//댓글 출력을 위한 댓글 서비스 객체 생성
+			CommentService commentService = new CommentServiceImpl();
+			
+			List<CommentDTO> commentList = commentService.commentList(boardNo);
+			
+			
 			request.setAttribute("dto", boardDto);
+			request.setAttribute("commentList", commentList);
 			dispatch("board_view/selectOne.jsp", request, response);
 		}
 		
