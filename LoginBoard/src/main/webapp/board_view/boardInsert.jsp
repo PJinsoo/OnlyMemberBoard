@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>새 글 쓰기</title>
 </head>
 <body>
 	<div>

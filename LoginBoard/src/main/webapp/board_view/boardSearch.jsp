@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>${searchWord }의 검색 결과</title>
 </head>
 <body>
 	<div>
