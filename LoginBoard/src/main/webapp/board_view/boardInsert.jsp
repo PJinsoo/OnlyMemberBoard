@@ -11,7 +11,6 @@
 		<!-- 비로그인 상태 -->
 		<%
 		if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
-		System.out.println("비로그인 유저 접속");
 		%>
 
 		<strong>잘못된 접근입니다.</strong><br>
@@ -20,7 +19,6 @@
 		<!-- 로그인 상태 -->
 		<%
 		} else if ((boolean) session.getAttribute("login")) {
-		System.out.println("새 글 쓰기 화면 출력");
 		%>
 		
 		<h1>새 글 쓰기</h1> <hr>

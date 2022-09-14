@@ -59,6 +59,35 @@ public class BoardServiceImpl implements BoardService {
 
 		return res;
 	}
+	
+	//추천하기
+	@Override
+	public boolean recommend(int boardNo) {
+		Connection conn = JDBC.getConnection();
+
+		boolean res = dao.recommend(conn, boardNo);
+		
+		if (res) {
+			JDBC.commit(conn);
+		}
+		JDBC.close(conn);
+		
+		return res;
+	}
+	
+	//추천 시 증가하는 조회수를 원상복구
+	public boolean downView(int boardNo) {
+		Connection conn = JDBC.getConnection();
+
+		boolean res = dao.downView(conn, boardNo);
+		
+		if (res) {
+			JDBC.commit(conn);
+		}
+		JDBC.close(conn);
+		
+		return res;
+	}
 
 	// 게시글 작성
 	@Override

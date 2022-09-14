@@ -81,6 +81,15 @@ public class BoardController extends HttpServlet {
 			dispatch("board_view/selectOne.jsp", request, response);
 		}
 		
+		//추천하기
+		else if(command.equals("recommend")) {
+			System.out.println("추천하기");
+			
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			service.recommend(boardNo);
+			service.downView(boardNo);
+		}
+		
 		//새 글 쓰기 페이지 요청
 		else if(command.equals("boardInsert")) {
 			response.sendRedirect("board_view/boardInsert.jsp");
@@ -192,6 +201,7 @@ public class BoardController extends HttpServlet {
 				jsResponse("게시글 삭제는 게시글 작성자만 가능합니다.", "board.do?command=boardList", response);
 			}
 		}
+		
 		
 	} //doGet()의 끝
 

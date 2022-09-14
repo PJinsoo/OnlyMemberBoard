@@ -15,6 +15,12 @@ public interface BoardService {
 	//조회수 카운팅
 	public boolean countingView(BoardDTO dto);
 	
+	//추천하기
+	public boolean recommend(int boardNo);
+	
+	//추천 시 증가하는 조회수를 원상복구
+	public boolean downView(int boardNo);
+	
 	//게시글 작성
 	public boolean insert(BoardDTO dto);
 	

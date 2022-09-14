@@ -9,7 +9,6 @@
 <body>
 	<%
 	if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
-		System.out.println("비로그인 유저 접속");
 	%>
 
 	<strong>잘못된 접근입니다.</strong>
@@ -20,7 +19,6 @@
 	<!-- 로그인 상태 -->
 	<%
 	} else if ((boolean) session.getAttribute("login")) {
-	System.out.println("수정화면 출력");
 	%>
 
 	<h1>게시글 수정</h1>
@@ -49,7 +47,6 @@
 					<input type="button" value="취소" onclick="location.href='board.do?command=boardList'"></td>
 			</tr>
 		</table>
-
 	</form>
 
 	<%

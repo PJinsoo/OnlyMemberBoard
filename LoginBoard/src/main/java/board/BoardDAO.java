@@ -23,6 +23,12 @@ public interface BoardDAO {
 	//조회수 카운팅
 	public boolean countingView(Connection conn, BoardDTO dto);
 	
+	//추천하기
+	public boolean recommend(Connection conn, int boardNo);
+	
+	//추천 시 증가하는 조회수를 감소시키기
+	public boolean downView(Connection conn, int boardNo);
+	
 	//게시글 작성
 	public boolean insert(Connection conn, BoardDTO dto);
 	

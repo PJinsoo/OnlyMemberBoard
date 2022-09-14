@@ -12,7 +12,6 @@
 		<!-- 비로그인 상태 -->
 		<%
 		if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
-			System.out.println("인증되지 않은 유저의 접근");
 		%>
 		<strong>잘못된 접근입니다.</strong><br>
 		<button onclick='location.href="member.do?command=index"'>돌아가기</button><br>
@@ -20,7 +19,6 @@
 		<!-- 로그인 상태 -->
 		<%
 		} else if ((boolean) session.getAttribute("login")) {
-			System.out.println("게시글 검색");
 		%>
 		
 		<h1>${searchWord }의 검색 결과</h1> <hr>
@@ -83,7 +81,6 @@
 	<br>
 		
 		<%
-		System.out.println("검색 완료 페이지 로드");
 		}
 		%>
 
