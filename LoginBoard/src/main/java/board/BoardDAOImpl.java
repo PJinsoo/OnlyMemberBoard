@@ -208,7 +208,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return (res > 0) ? true : false;
 	}
 
-	//게시글 추천 시 증가하는 조회수를 원상복구 시키는 메서드
+	//새로고침 작동 시 조회수를 원상복구 시키는 메서드
 	@Override
 	public boolean downView(Connection conn, int boardNo) {
 		String sql = "Update memberBoard Set viewCount = viewCount - 1 Where boardNo=?";

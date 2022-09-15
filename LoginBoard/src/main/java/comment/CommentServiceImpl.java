@@ -32,5 +32,19 @@ public class CommentServiceImpl implements CommentService {
 		JDBC.close(conn);
 		return res;
 	}
+	
+	//댓글 삭제
+	@Override
+	public boolean commentDelete(CommentDTO dto) {
+		Connection conn = JDBC.getConnection();
+		
+		boolean res = dao.commentDelete(conn, dto);
+		
+		if (res) {
+			JDBC.commit(conn);
+		}
+		JDBC.close(conn);
+		return res;
+	}
 
 }

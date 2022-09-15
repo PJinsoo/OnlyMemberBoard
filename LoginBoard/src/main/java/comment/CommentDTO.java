@@ -33,6 +33,12 @@ public class CommentDTO {
 		this.commentContent = commentContent;
 	}
 
+	public CommentDTO(int UID, int commentNo) {
+		super();
+		this.UID = UID;
+		this.commentNo = commentNo;
+	}
+
 	public int getCommentNo() {
 		return commentNo;
 	}

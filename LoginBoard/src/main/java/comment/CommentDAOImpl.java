@@ -63,4 +63,25 @@ public class CommentDAOImpl implements CommentDAO{
 
 		return (res > 0) ? true : false;
 	}
+	
+	//댓글 삭제
+	@Override
+	public boolean commentDelete(Connection conn, CommentDTO dto) {
+		String sql = "Delete From memberComment Where commentNo = ?";
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getCommentNo());
+			
+			res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBC.close(rs);
+			JDBC.close(ps);
+		}
+		
+		return (res > 0) ? true : false;
+	}
 }

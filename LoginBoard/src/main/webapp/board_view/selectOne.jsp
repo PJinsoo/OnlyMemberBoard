@@ -54,12 +54,41 @@
 				url : "comment.do?command=commentInsert",
 				type : "get",
 				data : commentParam,
-				success:function(data) {
+				success : function(data) {
 					alert('댓글을 작성하셨습니다.');
 					location.reload(); //자바스크립트의 새로고침 메서드
 				}
 			});
 	 	}
+		
+		//댓글 수정 버튼 클릭 시
+		function commentUpdate(commentNo){
+			alert("댓글 수정 미구현");
+		}
+		
+		//댓글 삭제 버튼 클릭 시
+		function commentDelete(commentNo, commentUID){
+			var deleteParam = {
+				UID : ${UID },
+				comNo : commentNo,
+				boardNo : ${dto.boardNo }
+			}
+			
+			if(commentUID == ${UID }){
+				$.ajax({
+					url : "comment.do?command=commentDelete",
+					type : "get",
+					data : deleteParam,
+					success : function(data) {
+						alert("댓글이 삭제되셨습니다.");
+						location.reload();
+					}
+				});
+			}
+			else{
+				alert("해당 댓글의 작성자만 삭제할 수 있습니다!");
+			}
+		}
 	</script>
 
 
@@ -95,8 +124,7 @@
 					onclick="recommend()" /> ${dto.recommend }</td>
 			</tr>
 			<tr>
-				<td colspan="4" align="right"><input type="button" value="수정"
-					onclick="location.href='board.do?command=boardUpdate&UID=${UID }&boardNo=${dto.boardNo }'">
+				<td colspan="4" align="right"><input type="button" value="수정" onclick="location.href='board.do?command=boardUpdate&UID=${UID }&boardNo=${dto.boardNo }'">
 					<input type="button" value="삭제"
 					onclick="location.href='board.do?command=boardDelete&UID=${UID }&boardNo=${dto.boardNo }'">
 					<input type="button" value="글 목록"
@@ -127,17 +155,19 @@
 				<th align="center">수정</th>
 				<th align="center">삭제</th>
 			</tr>
-
+			
 			<!-- 댓글 칸 -->
 			<c:forEach var="commentDTO" items="${commentList }">
-				<tr bgcolor=#F4EFE4>
+				<tr id="updateField" bgcolor=#F4EFE4>
 					<td align="center"><b>${commentDTO.memberNickname }</b></td>
 					<td>${commentDTO.commentContent }</td>
 					<td align="center">${commentDTO.commentTime }</td>
-					<td align="center"><a
-						href="comment.do?command=commentUpdate&UID=${UID }&boardNo=${DTO.boardNo }">수정</a></td>
-					<td align="center"><a
-						href="comment.do?command=commentDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></td>
+					<td align="center">
+						<a href="#" onclick="commentUpdate(${commentDTO.commentNo})">수정</a>
+					</td>
+					<td align="center">
+						<a href="#" onclick="commentDelete(${commentDTO.commentNo}, ${commentDTO.UID})">삭제</a>
+					</td>
 				</tr>
 			</c:forEach>
 
