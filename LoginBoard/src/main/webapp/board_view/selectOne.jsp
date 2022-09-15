@@ -30,24 +30,18 @@
 	<script> 
 		//Ajax를 통한 추천기능 구현
 		function recommend() {		
-			var recommendParam = {
-				boardNo : ${dto.boardNo}
-			}
-	
 			$.ajax({
 				//url : "comment.do?command=wow",
 				url : "board.do?command=recommend",
 				type : "get",
-				data : recommendParam,
+				data : {boardNo : ${dto.boardNo}},
 				success:function(data) {
 					//alert('게시글을 추천하셨습니다!');
 					location.reload(); //자바스크립트의 새로고침 메서드
 				}
 			});
 	 	}
-	</script>
-
-	<script>  
+		
 		//Ajax를 통한 댓글 쓰기 구현
 		function comment() {
 			var commentParam = {
@@ -129,7 +123,7 @@
 			<tr bgcolor=#F4EFE4>
 				<th align="center">작성자</th>
 				<th align="center">댓글</th>
-				<th align="center">작성일</th>
+				<th align="center">작성일자</th>
 				<th align="center">수정</th>
 				<th align="center">삭제</th>
 			</tr>
