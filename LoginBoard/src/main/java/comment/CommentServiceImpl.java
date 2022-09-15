@@ -18,5 +18,19 @@ public class CommentServiceImpl implements CommentService {
 		
 		return res;
 	}
+	
+	//댓글 작성
+	@Override
+	public boolean comment(CommentDTO dto) {
+		Connection conn = JDBC.getConnection();
+		
+		boolean res = dao.comment(conn, dto);
+		
+		if (res) {
+			JDBC.commit(conn);
+		}
+		JDBC.close(conn);
+		return res;
+	}
 
 }

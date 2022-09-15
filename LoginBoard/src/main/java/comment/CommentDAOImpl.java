@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import db_connection.JDBC;
+
 public class CommentDAOImpl implements CommentDAO{
 	
 	private PreparedStatement ps = null; // SQL 수행 객체
@@ -33,5 +35,32 @@ public class CommentDAOImpl implements CommentDAO{
 		}
 		
 		return res;
+	}
+	
+	//댓글 작성
+	@Override
+	public boolean comment(Connection conn, CommentDTO dto) {
+		String sql = "Insert Into memberComment(boardNo, UID, memberNickname, commentContent)"
+				   + "value(?, ?, "
+				   + "(Select memberNickname From members Where UID = ?), "
+				   + "?)";
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getBoardNo());
+			ps.setInt(2, dto.getUID());
+			ps.setInt(3, dto.getUID());
+			ps.setString(4, dto.getCommentContent());
+			
+			res = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBC.close(rs);
+			JDBC.close(ps);
+		}
+
+		return (res > 0) ? true : false;
 	}
 }

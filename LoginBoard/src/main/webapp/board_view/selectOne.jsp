@@ -13,13 +13,32 @@
 
 </head>
 <body>
+	<!-- 비로그인 상태 -->
+	<%
+	if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
+	%>
+	<strong>잘못된 접근입니다.</strong>
+	<br>
+	<button onclick='location.href="member.do?command=index"'>돌아가기</button>
+	<br>
 
-	<script> //Ajax를 통한 추천기능 구현
-		function recommend() {
+	<!-- 로그인 상태 -->
+	<%
+	} else if ((boolean) session.getAttribute("login")) {
+	%>
+
+	<script> 
+		//Ajax를 통한 추천기능 구현
+		function recommend() {		
+			var recommendParam = {
+				boardNo : ${dto.boardNo}
+			}
+	
 			$.ajax({
-				url : "board.do?command=recommend&boardNo=${dto.boardNo }",
+				//url : "comment.do?command=wow",
+				url : "board.do?command=recommend",
 				type : "get",
-				data : {boardNo : ${dto.boardNo}},
+				data : recommendParam,
 				success:function(data) {
 					//alert('게시글을 추천하셨습니다!');
 					location.reload(); //자바스크립트의 새로고침 메서드
@@ -28,20 +47,30 @@
 	 	}
 	</script>
 
+	<script>  
+		//Ajax를 통한 댓글 쓰기 구현
+		function comment() {
+			var commentParam = {
+					UID : ${UID },
+					boardNo : ${dto.boardNo },
+					commentContent : $("#commentContent").val()
+			}
+			
+			$.ajax({
+				url : "comment.do?command=commentInsert",
+				type : "get",
+				data : commentParam,
+				success:function(data) {
+					alert('댓글을 작성하셨습니다.');
+					location.reload(); //자바스크립트의 새로고침 메서드
+				}
+			});
+	 	}
+	</script>
+
+
 	<div>
-		<!-- 비로그인 상태 -->
-		<%
-		if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
-		%>
-		<strong>잘못된 접근입니다.</strong><br>
-		<button onclick='location.href="member.do?command=index"'>돌아가기</button>
-		<br>
-
-		<!-- 로그인 상태 -->
-		<%
-		} else if ((boolean) session.getAttribute("login")) {
-		%>
-
+		<!-- 게시글 출력부 -->
 		<h1>게시글 보기</h1>
 		<hr>
 		<table border="1">
@@ -68,7 +97,8 @@
 			</tr>
 			<tr>
 				<!-- 추천 버튼, 클릭 시 recommend()에서 Ajax 수행 -->
-				<td colspan="4" align="center"><input type="button" value="추천" onclick="recommend()" /> ${dto.recommend }</td>
+				<td colspan="4" align="center"><input type="button" value="추천"
+					onclick="recommend()" /> ${dto.recommend }</td>
 			</tr>
 			<tr>
 				<td colspan="4" align="right"><input type="button" value="수정"
@@ -80,22 +110,22 @@
 			</tr>
 		</table>
 	</div>
-	
+
 	<hr>
 
 	<div>
-		<!-- 댓글 테이블 -->
+		<!-- 댓글 출력부 -->
 		<table>
 			<col width="70px">
 			<col width="200px">
 			<col width="100px">
 			<col width="70px">
 			<col width="70px">
-			
+
 			<tr bgcolor=#F4EFE4>
 				<th colspan="5" align="center">댓글창</th>
 			</tr>
-			
+
 			<tr bgcolor=#F4EFE4>
 				<th align="center">작성자</th>
 				<th align="center">댓글</th>
@@ -103,23 +133,25 @@
 				<th align="center">수정</th>
 				<th align="center">삭제</th>
 			</tr>
-			
+
 			<!-- 댓글 칸 -->
 			<c:forEach var="commentDTO" items="${commentList }">
 				<tr bgcolor=#F4EFE4>
-					<td align="center">${commentDTO.memberNickname }</td>
+					<td align="center"><b>${commentDTO.memberNickname }</b></td>
 					<td>${commentDTO.commentContent }</td>
 					<td align="center">${commentDTO.commentTime }</td>
-					<td align="center"><a href="comment.do?command=commentUpdate&UID=${UID }&boardNo=${DTO.boardNo }">수정</a></td>
-					<td align="center"><a href="comment.do?command=commentDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></td>
+					<td align="center"><a
+						href="comment.do?command=commentUpdate&UID=${UID }&boardNo=${DTO.boardNo }">수정</a></td>
+					<td align="center"><a
+						href="comment.do?command=commentDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></td>
 				</tr>
 			</c:forEach>
-			
+
 			<!-- 댓글 작성칸 -->
 			<tr bgcolor=#F4EFE4>
-				<td>${memberNickname }</td>
-				<td colspan="3"><textarea rows="1" cols="50" name="commentContent"></textarea></td>
-				<td><input type="button" value="댓글 쓰기" onclick="comment()" /></td>
+				<td align="center"><b>${memberNickname }</b></td>
+				<td colspan="3"><textarea rows="1" cols="50" id="commentContent"></textarea></td>
+				<td align="center"><input type="button" value="댓글 쓰기" onclick="comment()" /></td>
 			</tr>
 		</table>
 

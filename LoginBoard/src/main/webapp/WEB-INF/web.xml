@@ -30,9 +30,9 @@
   	<url-pattern>/board.do</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
   	<servlet-name>Comment</servlet-name>
-  	<servlet-class>comment.CommetController</servlet-class>
+  	<servlet-class>comment.CommentController</servlet-class>
   </servlet>
   
   <servlet-mapping>

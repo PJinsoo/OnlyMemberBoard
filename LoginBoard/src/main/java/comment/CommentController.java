@@ -7,8 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import board.BoardService;
+import board.BoardServiceImpl;
+
 
 //댓글 관리 컨트롤러
+
 
 @WebServlet("/CommentController")
 public class CommentController extends HttpServlet {
@@ -30,6 +34,22 @@ public class CommentController extends HttpServlet {
 		String command = request.getParameter("command");
 		
 		CommentService service = new CommentServiceImpl();
+		BoardService boardService = new BoardServiceImpl();
+		
+		
+		//댓글 작성
+		if(command.equals("commentInsert")) {
+			System.out.println("댓글작성");
+			
+			int UID = Integer.parseInt(request.getParameter("UID"));
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			String commentContent = request.getParameter("commentContent");
+			
+			CommentDTO commentDto = new CommentDTO(UID, boardNo, commentContent);
+			
+			service.comment(commentDto);
+			boardService.downView(boardNo);
+		}
 		
 	}// doGet의 끝
 

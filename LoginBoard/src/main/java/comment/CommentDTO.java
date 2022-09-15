@@ -25,6 +25,14 @@ public class CommentDTO {
 		this.commentTime = commentTime;
 	}
 
+	//댓글 작성 생성자
+	public CommentDTO(int UID, int boardNo, String commentContent) {
+		super();
+		this.UID = UID;
+		this.boardNo = boardNo;
+		this.commentContent = commentContent;
+	}
+
 	public int getCommentNo() {
 		return commentNo;
 	}
