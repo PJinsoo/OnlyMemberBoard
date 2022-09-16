@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import comment.CommentDTO;
+import comment.CommentService;
+import comment.CommentServiceImpl;
+
 
 //게시판 관리 컨트롤러
 
@@ -77,8 +81,24 @@ public class BoardController extends HttpServlet {
 			service.countingView(counting);
 			System.out.println("게시글 번호" + boardNo + " 조회수 증가");
 			
+			//댓글 출력을 위한 댓글 서비스 객체 생성
+			CommentService commentService = new CommentServiceImpl();
+			
+			List<CommentDTO> commentList = commentService.commentList(boardNo);
+			
+			
 			request.setAttribute("dto", boardDto);
+			request.setAttribute("commentList", commentList);
 			dispatch("board_view/selectOne.jsp", request, response);
+		}
+		
+		//추천하기
+		else if(command.equals("recommend")) {
+			System.out.println("추천하기");
+			
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			service.recommend(boardNo);
+			service.downView(boardNo);
 		}
 		
 		//새 글 쓰기 페이지 요청
@@ -192,6 +212,7 @@ public class BoardController extends HttpServlet {
 				jsResponse("게시글 삭제는 게시글 작성자만 가능합니다.", "board.do?command=boardList", response);
 			}
 		}
+		
 		
 	} //doGet()의 끝
 

@@ -130,7 +130,22 @@ public class MemberController extends HttpServlet {
 			
 			MemberDTO member = new MemberDTO(memberID, memberPW, memberNickname);
 			
+			//회원정보 수정
 			boolean res = memberService.memberUpdate(member);
+			
+			//유저 정보 다시 불러오기 수행
+			MemberDTO userInfoRefresh = new MemberDTO(memberID, memberPW);
+			boolean login = memberService.login(userInfoRefresh);
+			
+			userInfoRefresh = memberService.info(userInfoRefresh);
+			
+			//세션 재저장
+			HttpSession session = request.getSession();
+			session.setAttribute("login", login);
+			session.setAttribute("UID", member.getUID());
+			session.setAttribute("memberID", member.getMemberID());
+			session.setAttribute("memberPW", member.getMemberPW());
+			session.setAttribute("memberNickname", member.getMemberNickname());
 			
 			if(res) {
 				jsResponse("회원 정보가 수정되었습니다.", "member.do?command=index", response);

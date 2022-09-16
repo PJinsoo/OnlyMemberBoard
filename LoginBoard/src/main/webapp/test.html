@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h1>asdf</h1>
+	<p id="test">hello world</p>
+	
+	<ul>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+		<li>hellooooo</li>
+	</ul>
+	
+	<input type="text" name="" id="userInput">
+	<input type="text" name="" id="userInput2">
+	<p id="userInputPrint"></p>
+	<button>버튼</button> 
+	
+	<div class="wrapper">
+		<h1 class="title">title</h1>
+		<ul class="item">
+			<li class="items">item 1</li>
+			<li class="items">item 2</li>
+		</ul>
+	</div>
+	
+	<script>
+		$('#test').html('<b>hello</b> world');
+		$("li").eq(3).css("color", "red");
+		$("li:gt(3)").css("color", "blue");
+		$("li:lt(3)").css("color", "green");
+		
+		$("button").click(function(){
+			const value = $("#userInput").val();
+			$("#userInput2").val(value);
+			$("#userInputPrint").text(value);
+		})
+		
+		$("ul").parent().append("one");
+		$("div").children().append("two");
+		$("div").first().text("three");
+	</script>
+</body>
+</html>

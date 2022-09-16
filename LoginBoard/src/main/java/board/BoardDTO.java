@@ -10,13 +10,14 @@ public class BoardDTO {
 	private String memberNickname;
 	private int viewCount;
 	private Date postTime;
+	private int recommend;
 	
 	public BoardDTO() {
 		super();
 	}
 	
 	public BoardDTO(int boardNo, int UID, String title, String content, String memberNickname, int viewCount,
-			Date postTime) {
+			Date postTime, int recommend) {
 		super();
 		this.boardNo = boardNo;
 		this.UID = UID;
@@ -25,6 +26,7 @@ public class BoardDTO {
 		this.memberNickname = memberNickname;
 		this.viewCount = viewCount;
 		this.postTime = postTime;
+		this.recommend = recommend;
 	}
 	
 	//게시글 조회용 생성자
@@ -104,5 +106,12 @@ public class BoardDTO {
 	}
 	public void setPostTime(Date postTime) {
 		this.postTime = postTime;
+	}
+	
+	public int getRecommend() {
+		return recommend;
+	}
+	public void setRecommend(int recommend) {
+		this.recommend = recommend;
 	}
 }

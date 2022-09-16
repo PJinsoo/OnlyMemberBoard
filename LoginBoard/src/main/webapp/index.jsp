@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import = "java.lang.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,6 @@
 		<!-- 비로그인 상태 -->
 		<%
 		if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
-		System.out.println("비로그인 유저 접속");
 		%>
 
 		<strong>로그인이 필요합니다.</strong><br>
@@ -22,7 +22,6 @@
 		<!-- 로그인 상태 -->
 		<%
 		} else if ((boolean) session.getAttribute("login")) {
-		System.out.println("로그인 성공, 로그인 메뉴 출력");
 		%>
 		
 		<strong>${memberNickname }님 환영합니다.</strong><br>

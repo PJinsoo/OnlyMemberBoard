@@ -4,12 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 탈퇴 페이지</title>
 </head>
 <body>
 	<%
 	if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
-		System.out.println("비로그인 유저 접속");
 	%>
 
 	<strong>잘못된 접근입니다.</strong>

@@ -29,7 +29,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 			while (rs.next()) {
 				BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getInt(6), rs.getDate(7));
+						rs.getString(5), rs.getInt(6), rs.getDate(7), rs.getInt(8));
 				res.add(tmp);
 			}
 		} catch (SQLException e) {
@@ -62,7 +62,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 				while (rs.next()) {
 					BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-							rs.getString(5), rs.getInt(6), rs.getDate(7));
+							rs.getString(5), rs.getInt(6), rs.getDate(7), rs.getInt(8));
 					res.add(tmp);
 				}
 			} catch (SQLException e) {
@@ -81,7 +81,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 				while (rs.next()) {
 					BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-							rs.getString(5), rs.getInt(6), rs.getDate(7));
+							rs.getString(5), rs.getInt(6), rs.getDate(7), rs.getInt(8));
 					res.add(tmp);
 				}
 			} catch (SQLException e) {
@@ -100,7 +100,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 				while (rs.next()) {
 					BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-							rs.getString(5), rs.getInt(6), rs.getDate(7));
+							rs.getString(5), rs.getInt(6), rs.getDate(7), rs.getInt(8));
 					res.add(tmp);
 				}
 			} catch (SQLException e) {
@@ -124,7 +124,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 				while (rs.next()) {
 					BoardDTO tmp = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-							rs.getString(5), rs.getInt(6), rs.getDate(7));
+							rs.getString(5), rs.getInt(6), rs.getDate(7), rs.getInt(8));
 					res.add(tmp);
 				}
 			} catch (SQLException e) {
@@ -150,7 +150,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 			while (rs.next()) {
 				res = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getInt(6), rs.getDate(7));
+						rs.getInt(6), rs.getDate(7), rs.getInt(8));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -172,6 +172,52 @@ public class BoardDAOImpl implements BoardDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, boardDto.getBoardNo());
+
+			res = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBC.close(rs);
+			JDBC.close(ps);
+		}
+
+		return (res > 0) ? true : false;
+	}
+
+	// 게시글 추천
+	@Override
+	public boolean recommend(Connection conn, int boardNo) {
+		String sql = "Update memberBoard Set recommend = recommend + 1 Where boardNo=?";
+
+		int res = 0;
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, boardNo);
+
+			res = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBC.close(rs);
+			JDBC.close(ps);
+		}
+
+		return (res > 0) ? true : false;
+	}
+
+	//새로고침 작동 시 조회수를 원상복구 시키는 메서드
+	@Override
+	public boolean downView(Connection conn, int boardNo) {
+		String sql = "Update memberBoard Set viewCount = viewCount - 1 Where boardNo=?";
+
+		int res = 0;
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, boardNo);
 
 			res = ps.executeUpdate();
 

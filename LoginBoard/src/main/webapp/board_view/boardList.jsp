@@ -5,14 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판 목록</title>
 </head>
 <body>
 	<div>
 		<!-- 비로그인 상태 -->
 		<%
 		if (session.getAttribute("login") == null || !(boolean) session.getAttribute("login")) {
-			System.out.println("인증되지 않은 유저의 접근");
 		%>
 		<strong>잘못된 접근입니다.</strong><br>
 		<button onclick='location.href="member.do?command=index"'>돌아가기</button><br>
@@ -20,22 +19,22 @@
 		<!-- 로그인 상태 -->
 		<%
 		} else if ((boolean) session.getAttribute("login")) {
-			System.out.println("인증된 유저의 게시판 접근");
 		%>
 		
 		<h1>게시판 목록</h1> <hr>
 		<table border="1">
-			<col width="50px">	
-			<col width="200px">
-			<col width="100px">
-			<col width="70px">
-			<col width="100px">
-			<col width="50px">
-			<col width="50px">
+			<col width="50px">	<!-- 번호 -->
+			<col width="200px"> <!-- 제목 -->
+			<col width="100px"> <!-- 작성자 -->
+			<col width="70px">  <!-- 조회수 -->
+			<col width="70px">  <!-- 추천 -->
+			<col width="100px"> <!-- 작성일자 -->
+			<col width="50px">  <!-- 수정 -->
+			<col width="50px">  <!-- 삭제 -->
 			
 			<!-- 검색 -->
 			<tr>
-				<td colspan="7">
+				<td colspan="8">
 					<div align="right">
 						<form action="board.do" method="post">
 							<input type="hidden" name="command" value="search">
@@ -57,6 +56,7 @@
 				<th>제목</th>
 				<th>작성자</th>
 				<th>조회수</th>
+				<th>추천</th>
 				<th>작성일자</th>
 				<th>수정</th>
 				<th>삭제</th>
@@ -69,6 +69,7 @@
 				<td><a href="board.do?command=boardOne&boardNo=${DTO.boardNo }">${DTO.title }</a></td>
 				<td><div align="center">${DTO.memberNickname }</div></td>
 				<td><div align="center">${DTO.viewCount }</div></td>
+				<td><div align="center">${DTO.recommend }</div></td>
 				<td>${DTO.postTime }</td>
 				<td><div align="center"><a href="board.do?command=boardUpdate&UID=${UID }&boardNo=${DTO.boardNo }">수정</a></div></td>
 				<td><div align="center"><a href="board.do?command=boardDelete&UID=${UID }&boardNo=${DTO.boardNo }">삭제</a></div></td>
@@ -76,7 +77,7 @@
 		</c:forEach>
 		
 		<tr>
-			<td colspan="7">			
+			<td colspan="8">			
 				<div align="right">
 					<input type="button" value="새 글 쓰기" onclick="location.href='board.do?command=boardInsert'">
 				</div>
@@ -87,7 +88,6 @@
 	<button onclick='location.href="member.do?command=index"'>내 페이지</button><br>
 		
 		<%
-		System.out.println("게시판 로딩 완료");
 		}
 		%>
 
