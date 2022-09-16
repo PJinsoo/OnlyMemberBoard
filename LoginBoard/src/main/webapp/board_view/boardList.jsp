@@ -20,7 +20,7 @@
 		<%
 		} else if ((boolean) session.getAttribute("login")) {
 		%>
-		
+				
 		<h1>게시판 목록</h1> <hr>
 		<table border="1">
 			<col width="50px">	<!-- 번호 -->
@@ -64,6 +64,7 @@
 			
 			<!-- 게시글 정보 로드 -->
 		<c:forEach var="DTO" items="${list }">
+			<script>commentCount(${DTO.boardNo })</script>
 			<tr>
 				<td><div align="center">${DTO.boardNo }</div></td>
 				<td><a href="board.do?command=boardOne&boardNo=${DTO.boardNo }">${DTO.title }</a></td>
@@ -86,6 +87,7 @@
 	</table>
 	
 	<button onclick='location.href="member.do?command=index"'>내 페이지</button><br>
+
 		
 		<%
 		}

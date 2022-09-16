@@ -27,11 +27,10 @@
 	} else if ((boolean) session.getAttribute("login")) {
 	%>
 
-	<script> 
+	<script>
 		//Ajax를 통한 추천기능 구현
 		function recommend() {		
 			$.ajax({
-				//url : "comment.do?command=wow",
 				url : "board.do?command=recommend",
 				type : "get",
 				data : {boardNo : ${dto.boardNo}},
@@ -41,7 +40,7 @@
 				}
 			});
 	 	}
-		
+	
 		//Ajax를 통한 댓글 쓰기 구현
 		function comment() {
 			var commentParam = {
@@ -68,13 +67,16 @@
 		
 		//댓글 삭제 버튼 클릭 시
 		function commentDelete(commentNo, commentUID){
-			var deleteParam = {
-				UID : ${UID },
-				comNo : commentNo,
-				boardNo : ${dto.boardNo }
-			}
 			
-			if(commentUID == ${UID }){
+			//삭제를 요구한 사용자의 유효성 확인
+			if(commentUID == ${UID }){ //댓글의 UID와 사용자의 UID가 일치
+				//삭제에 필요한 데이터 저장
+				var deleteParam = {
+						UID : ${UID },
+						comNo : commentNo,
+						boardNo : ${dto.boardNo }
+						}
+			
 				$.ajax({
 					url : "comment.do?command=commentDelete",
 					type : "get",
@@ -86,10 +88,11 @@
 				});
 			}
 			else{
+				//UID 불일치, 요구 거부
 				alert("해당 댓글의 작성자만 삭제할 수 있습니다!");
 			}
 		}
-	</script>
+		</script>  
 
 
 	<div>
@@ -120,8 +123,9 @@
 			</tr>
 			<tr>
 				<!-- 추천 버튼, 클릭 시 recommend()에서 Ajax 수행 -->
-				<td colspan="4" align="center"><input type="button" value="추천"
-					onclick="recommend()" /> ${dto.recommend }</td>
+				<td colspan="4" align="center">
+					<input type="button" value="추천" onclick="recommend()" /> ${dto.recommend }
+				</td>
 			</tr>
 			<tr>
 				<td colspan="4" align="right"><input type="button" value="수정" onclick="location.href='board.do?command=boardUpdate&UID=${UID }&boardNo=${dto.boardNo }'">

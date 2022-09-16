@@ -15,7 +15,7 @@ public class BoardDTO {
 	public BoardDTO() {
 		super();
 	}
-	
+
 	public BoardDTO(int boardNo, int UID, String title, String content, String memberNickname, int viewCount,
 			Date postTime, int recommend) {
 		super();

@@ -84,4 +84,6 @@ public class CommentDAOImpl implements CommentDAO{
 		
 		return (res > 0) ? true : false;
 	}
+	
+	
 }

@@ -46,5 +46,4 @@ public class CommentServiceImpl implements CommentService {
 		JDBC.close(conn);
 		return res;
 	}
-
 }
