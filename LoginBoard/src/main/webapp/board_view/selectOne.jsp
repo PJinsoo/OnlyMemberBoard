@@ -35,7 +35,7 @@
 				type : "get",
 				data : {boardNo : ${dto.boardNo}},
 				success:function(data) {
-					//alert('게시글을 추천하셨습니다!');
+					alert('게시글을 추천하셨습니다!');
 					location.reload(); //자바스크립트의 새로고침 메서드
 				}
 			});
