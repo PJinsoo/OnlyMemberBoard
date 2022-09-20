@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 수정하기</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<%
@@ -24,8 +25,9 @@
 	<h1>게시글 수정</h1>
 	<hr>
 
-	<form action="board.do" method="post">
-		<input type="hidden" name="command" value="updateExecute">
+	<!-- <form action="board.do" method="post">  -->
+	<form id="updateForm" method="post">
+		<!-- <input type="hidden" name="command" value="updateExecute">  -->
 		<input type="hidden" name="UID" value="${UID }">
 		<input type="hidden" name="boardNo" value="${dto.boardNo }">
 		<table border="1">
@@ -43,11 +45,30 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="right">
-					<input type="submit" value="작성하기">
+					<input type="button" id="updateBoard" value="작성하기">
 					<input type="button" value="취소" onclick="location.href='board.do?command=boardList'"></td>
 			</tr>
 		</table>
 	</form>
+
+	<script>
+	$("#updateBoard").click(function(){
+		
+		var form = $("#updateForm").serialize();
+		
+		$.ajax({
+			url : "board.do?command=updateExecute",
+			type : "post",
+			data : form,
+			success : function(data) {
+				alert('게시글을 수정하셨습니다.');
+				location.href='board.do?command=boardOne&boardNo=${dto.boardNo }';
+			}
+		});
+		
+	})
+	</script>
+
 
 	<%
 	}

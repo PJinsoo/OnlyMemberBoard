@@ -62,7 +62,7 @@
 		$("#insertBoard").click(function(){			
 			
 			//form 태그 내부의 데이터를 serialize()로 정리하여 저장
-			var form = $("#insertForm").serialize()
+			var form = $("#insertForm").serialize();
 			
 			$.ajax({
 				url : "../board.do?command=insertExecute",

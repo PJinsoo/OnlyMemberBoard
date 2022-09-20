@@ -66,7 +66,7 @@ public class BoardController extends HttpServlet {
 			dispatch("board_view/boardSearch.jsp", request, response);
 		}
 		
-		//사용자 게시글 제목 클릭, 게시글 조회 요청
+		//게시글 조회
 		else if (command.equals("boardOne")){
 			
 			//사용자가 클릭한 게시글의 no 저장
